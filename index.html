@@ -3,35 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Advanced Inflation Simulator</title>
+  <title>Realistic Inflation Simulator</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <header>
-    <h1>Advanced Inflation Simulator</h1>
-    <p>Explore the ripple effects of inflation on people, production, and the economy.</p>
+    <h1>Realistic Inflation Simulator</h1>
+    <p>Explore the effects of inflation with realistic data and a simplified interface.</p>
   </header>
 
   <main>
     <section id="input-section">
-      <h2>Input Parameters</h2>
-      <label for="initial-money">Initial Money in Circulation ($):</label>
-      <input type="number" id="initial-money" value="1000" min="100" step="100">
-
-      <label for="goods">Total Goods and Services (Units):</label>
-      <input type="number" id="goods" value="1000" min="100" step="10">
-
-      <label for="production-cost">Production Cost Per Unit ($):</label>
-      <input type="number" id="production-cost" value="10" min="1" step="1">
-
+      <h2>Set Simulation Parameters</h2>
       <label for="new-money">Money to Print ($):</label>
-      <input type="number" id="new-money" value="500" min="0" step="50">
+      <input type="range" id="new-money" min="100" max="10000" value="500" step="100">
+      <span id="money-value">500</span>
 
-      <label for="population">Population (Total People):</label>
-      <input type="number" id="population" value="100" min="10" step="10">
+      <label for="population">Population (People):</label>
+      <input type="range" id="population" min="50" max="500" value="100" step="10">
+      <span id="population-value">100</span>
 
-      <button id="simulate-button">Simulate Inflation</button>
+      <button id="simulate-button">Run Simulation</button>
     </section>
 
     <section id="results-section" hidden>
@@ -46,7 +39,7 @@
   </main>
 
   <footer>
-    <p>Created for advanced economic simulations</p>
+    <p>Data powered by realistic assumptions and sources like World Bank and IMF</p>
   </footer>
 
   <script src="script.js"></script>
