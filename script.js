@@ -1,77 +1,84 @@
-// script.js
+document.addEventListener("DOMContentLoaded", () => {
+  // Default values
+  const GDP = 100000; // Total value of goods/services
+  const initialMoney = 1000; // Money in circulation
+  const incomeDistribution = { low: 0.6, middle: 0.3, high: 0.1 }; // Income groups
 
-// Default realistic data
-const GDP = 100000; // Total value of goods/services ($)
-const initialMoney = 1000; // Money in circulation ($)
-const productionCostPerUnit = 10; // Average cost to produce one unit of goods ($)
-const incomeDistribution = {
-  low: 0.6,  // 60% of population
-  middle: 0.3, // 30% of population
-  high: 0.1,   // 10% of population
-};
+  // Link sliders and display values
+  const newMoneySlider = document.getElementById("new-money");
+  const newMoneyValue = document.getElementById("money-value");
+  const populationSlider = document.getElementById("population");
+  const populationValue = document.getElementById("population-value");
 
-document.getElementById("new-money").addEventListener("input", (e) => {
-  document.getElementById("money-value").textContent = e.target.value;
-});
-
-document.getElementById("population").addEventListener("input", (e) => {
-  document.getElementById("population-value").textContent = e.target.value;
-});
-
-document.getElementById("simulate-button").addEventListener("click", () => {
-  const newMoney = parseFloat(document.getElementById("new-money").value);
-  const population = parseFloat(document.getElementById("population").value);
-
-  // Calculate inflation
-  const totalMoneyAfter = initialMoney + newMoney;
-  const priceBefore = GDP / initialMoney;
-  const priceAfter = GDP / totalMoneyAfter;
-  const inflationRate = (priceAfter / priceBefore - 1) * 100;
-
-  // Calculate impact on income groups
-  const lowIncome = (population * incomeDistribution.low) * 500;
-  const middleIncome = (population * incomeDistribution.middle) * 1500;
-  const highIncome = (population * incomeDistribution.high) * 5000;
-
-  const adjustedLowIncome = lowIncome / (priceAfter / priceBefore);
-  const adjustedMiddleIncome = middleIncome / (priceAfter / priceBefore);
-  const adjustedHighIncome = highIncome / (priceAfter / priceBefore);
-
-  // Update UI
-  document.getElementById("results-section").hidden = false;
-
-  const summary = `
-    Total Money Supply After Printing: $${totalMoneyAfter.toFixed(2)}<br>
-    Inflation Rate: ${inflationRate.toFixed(2)}%<br>
-    Adjusted Purchasing Power:<br>
-    - Low Income: $${adjustedLowIncome.toFixed(2)}<br>
-    - Middle Income: $${adjustedMiddleIncome.toFixed(2)}<br>
-    - High Income: $${adjustedHighIncome.toFixed(2)}<br>
-  `;
-  document.getElementById("summary").innerHTML = summary;
-
-  // Charts
-  new Chart(document.getElementById("price-chart").getContext("2d"), {
-    type: "bar",
-    data: {
-      labels: ["Before Printing", "After Printing"],
-      datasets: [{
-        label: "Price Per Unit",
-        data: [priceBefore, priceAfter],
-        backgroundColor: ["#4caf50", "#f44336"],
-      }]
-    }
+  newMoneySlider.addEventListener("input", () => {
+    newMoneyValue.textContent = newMoneySlider.value;
   });
 
-  new Chart(document.getElementById("income-chart").getContext("2d"), {
-    type: "bar",
-    data: {
-      labels: ["Low Income", "Middle Income", "High Income"],
-      datasets: [{
-        label: "Adjusted Income",
-        data: [adjustedLowIncome, adjustedMiddleIncome, adjustedHighIncome],
-        backgroundColor: ["#ff9800", "#4caf50", "#2196f3"],
-      }]
-    }
+  populationSlider.addEventListener("input", () => {
+    populationValue.textContent = populationSlider.value;
+  });
+
+  // Handle simulation
+  document.getElementById("simulate-button").addEventListener("click", () => {
+    const newMoney = parseFloat(newMoneySlider.value);
+    const population = parseFloat(populationSlider.value);
+
+    // Inflation calculations
+    const totalMoneyAfter = initialMoney + newMoney;
+    const priceBefore = GDP / initialMoney;
+    const priceAfter = GDP / totalMoneyAfter;
+    const inflationRate = ((priceAfter / priceBefore - 1) * 100).toFixed(2);
+
+    // Income group calculations
+    const lowIncome = population * incomeDistribution.low * 500;
+    const middleIncome = population * incomeDistribution.middle * 1500;
+    const highIncome = population * incomeDistribution.high * 5000;
+
+    const adjustedLowIncome = (lowIncome * priceBefore / priceAfter).toFixed(2);
+    const adjustedMiddleIncome = (middleIncome * priceBefore / priceAfter).toFixed(2);
+    const adjustedHighIncome = (highIncome * priceBefore / priceAfter).toFixed(2);
+
+    // Display results
+    document.getElementById("results-section").hidden = false;
+    document.getElementById("summary").innerHTML = `
+      <strong>Inflation Simulation Results:</strong><br>
+      Total Money Supply After Printing: $${totalMoneyAfter.toFixed(2)}<br>
+      Inflation Rate: ${inflationRate}%<br>
+      Adjusted Purchasing Power:<br>
+      - Low Income: $${adjustedLowIncome}<br>
+      - Middle Income: $${adjustedMiddleIncome}<br>
+      - High Income: $${adjustedHighIncome}
+    `;
+
+    // Charts
+    new Chart(document.getElementById("price-chart").getContext("2d"), {
+      type: "bar",
+      data: {
+        labels: ["Before Printing", "After Printing"],
+        datasets: [{
+          label: "Price Per Unit",
+          data: [priceBefore.toFixed(2), priceAfter.toFixed(2)],
+          backgroundColor: ["#4caf50", "#f44336"],
+        }]
+      },
+      options: {
+        responsive: true,
+      }
+    });
+
+    new Chart(document.getElementById("income-chart").getContext("2d"), {
+      type: "bar",
+      data: {
+        labels: ["Low Income", "Middle Income", "High Income"],
+        datasets: [{
+          label: "Adjusted Income",
+          data: [adjustedLowIncome, adjustedMiddleIncome, adjustedHighIncome],
+          backgroundColor: ["#ff9800", "#4caf50", "#2196f3"],
+        }]
+      },
+      options: {
+        responsive: true,
+      }
+    });
   });
 });
