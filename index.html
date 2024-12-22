@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inflation Simulator</title>
+  <link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+</head>
+<body>
+  <header>
+    <h1>Inflation Simulator</h1>
+    <p>Learn how printing money impacts prices in a small economy!</p>
+  </header>
+
+  <main>
+    <section id="input-section">
+      <h2>Input Money Supply</h2>
+      <label for="initial-money">Initial Money in Circulation:</label>
+      <input type="number" id="initial-money" value="1000" min="100" step="100">
+      
+      <label for="goods">Total Goods and Services:</label>
+      <input type="number" id="goods" value="1000" min="100" step="10">
+
+      <label for="new-money">Money to Print:</label>
+      <input type="number" id="new-money" value="500" min="0" step="50">
+
+      <button id="simulate-button">Simulate Inflation</button>
+    </section>
+
+    <section id="results-section" hidden>
+      <h2>Simulation Results</h2>
+      <canvas id="price-chart" width="400" height="200"></canvas>
+      <p id="summary"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Created for educational purposes</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
