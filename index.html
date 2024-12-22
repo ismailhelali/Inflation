@@ -3,41 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inflation Simulator</title>
+  <title>Advanced Inflation Simulator</title>
   <link rel="stylesheet" href="styles.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <header>
-    <h1>Inflation Simulator</h1>
-    <p>Learn how printing money impacts prices in a small economy!</p>
+    <h1>Advanced Inflation Simulator</h1>
+    <p>Explore the ripple effects of inflation on people, production, and the economy.</p>
   </header>
 
   <main>
     <section id="input-section">
-      <h2>Input Money Supply</h2>
-      <label for="initial-money">Initial Money in Circulation:</label>
+      <h2>Input Parameters</h2>
+      <label for="initial-money">Initial Money in Circulation ($):</label>
       <input type="number" id="initial-money" value="1000" min="100" step="100">
-      
-      <label for="goods">Total Goods and Services:</label>
+
+      <label for="goods">Total Goods and Services (Units):</label>
       <input type="number" id="goods" value="1000" min="100" step="10">
 
-      <label for="new-money">Money to Print:</label>
+      <label for="production-cost">Production Cost Per Unit ($):</label>
+      <input type="number" id="production-cost" value="10" min="1" step="1">
+
+      <label for="new-money">Money to Print ($):</label>
       <input type="number" id="new-money" value="500" min="0" step="50">
+
+      <label for="population">Population (Total People):</label>
+      <input type="number" id="population" value="100" min="10" step="10">
 
       <button id="simulate-button">Simulate Inflation</button>
     </section>
 
     <section id="results-section" hidden>
       <h2>Simulation Results</h2>
-      <canvas id="price-chart" width="400" height="200"></canvas>
+      <div id="charts">
+        <canvas id="price-chart" width="400" height="200"></canvas>
+        <canvas id="income-chart" width="400" height="200"></canvas>
+        <canvas id="production-chart" width="400" height="200"></canvas>
+      </div>
       <p id="summary"></p>
     </section>
   </main>
 
   <footer>
-    <p>Created for educational purposes</p>
+    <p>Created for advanced economic simulations</p>
   </footer>
 
   <script src="script.js"></script>
