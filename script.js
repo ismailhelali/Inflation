@@ -18,6 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
     populationValue.textContent = populationSlider.value;
   });
 
+  // Chart instances
+  let priceChart = null;
+  let incomeChart = null;
+
   // Handle simulation
   document.getElementById("simulate-button").addEventListener("click", () => {
     const newMoney = parseFloat(newMoneySlider.value);
@@ -50,8 +54,13 @@ document.addEventListener("DOMContentLoaded", () => {
       - High Income: $${adjustedHighIncome}
     `;
 
-    // Charts
-    new Chart(document.getElementById("price-chart").getContext("2d"), {
+    // Destroy existing charts if any
+    if (priceChart) priceChart.destroy();
+    if (incomeChart) incomeChart.destroy();
+
+    // Create Price Chart
+    const priceCtx = document.getElementById("price-chart").getContext("2d");
+    priceChart = new Chart(priceCtx, {
       type: "bar",
       data: {
         labels: ["Before Printing", "After Printing"],
@@ -66,7 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    new Chart(document.getElementById("income-chart").getContext("2d"), {
+    // Create Income Chart
+    const incomeCtx = document.getElementById("income-chart").getContext("2d");
+    incomeChart = new Chart(incomeCtx, {
       type: "bar",
       data: {
         labels: ["Low Income", "Middle Income", "High Income"],
